@@ -1,19 +1,30 @@
 <script lang="ts">
-    import { Node, Svelvet, Minimap, Controls } from 'svelvet';
-    import type { Device } from "$lib/models";
+    import { writable } from 'svelte/store';
+    import { SvelteFlow, Background, Controls } from '@xyflow/svelte';
+    import type { Device } from '$lib/models';
+    import '@xyflow/svelte/dist/style.css';
 
     export let devices: Device[];
+
+    const nodes = writable(devices.map(d => ({
+        id: `${d.id}`, // required and needs to be a string
+        position: { // required
+            x: d.positionX,
+            y: d.positionY
+        },
+        data: {
+            label: d.title // required
+        }
+    })));
+
+    const edges = writable([]);
 </script>
 
 <section class="root">
-    <Svelvet controls locked>
-        {#each devices as device}
-            <Node
-                id="node-{device.id}"
-                label="{device.title}"
-                position={{x: device.positionX, y: device.positionY}}/>
-        {/each}
-    </Svelvet>
+    <SvelteFlow {nodes} {edges}>
+        <Background />
+        <Controls />
+    </SvelteFlow>
 </section>
 
 <style lang="sass">
