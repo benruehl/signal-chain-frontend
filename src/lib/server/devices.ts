@@ -6,3 +6,17 @@ export const fetchDevices = async (f: typeof fetch) => {
     const devices = await res.json() as Device[];
     return devices;
 }
+
+export const updateDevice = async (f: typeof fetch, device: Device) => {
+    const res = await f(`${env.API_BASE_URL}/devices/${device.id}`, {
+        method: "PUT",
+        body: JSON.stringify({
+            ...device,
+            id: undefined
+        }),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+    return await res.json() as Device;
+}

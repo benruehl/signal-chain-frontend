@@ -18,10 +18,35 @@
     })));
 
     const edges = writable([]);
+
+    function handleNodeDrag(event: CustomEvent) {
+        const { id, position } = event.detail.node
+        const device = devices.find(d => d.id == id)
+        const updatedDevice = {
+            ...device,
+            positionX: position.x,
+            positionY: position.y
+        } as Device
+
+        updateDevice(updatedDevice)
+    }
+
+    async function updateDevice(device: Device) {
+        const response = await fetch('/api/devices', {
+			method: 'PUT',
+			body: JSON.stringify(device),
+			headers: {
+				'content-type': 'application/json',
+			},
+		});
+	
+        // TODO handle response
+		await response.json();
+    }
 </script>
 
 <section class="root">
-    <SvelteFlow {nodes} {edges}>
+    <SvelteFlow {nodes} {edges} on:nodedragstop={handleNodeDrag}>
         <Background />
         <Controls />
     </SvelteFlow>
