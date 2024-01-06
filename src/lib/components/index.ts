@@ -1,0 +1,1 @@
+export { default as SignalChainBoard } from './SignalChainBoard.svelte';
