@@ -1,1 +1,1 @@
-export { default as SignalChainBoard } from './SignalChainBoard.svelte';
+export { default as Board } from './Board.svelte';
