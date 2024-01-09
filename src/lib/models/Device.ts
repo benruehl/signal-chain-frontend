@@ -1,5 +1,5 @@
 export interface Device {
-    id: number,
+    id: number | undefined,
     title: string,
     positionX: number,
     positionY: number
