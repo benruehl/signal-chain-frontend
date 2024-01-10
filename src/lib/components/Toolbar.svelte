@@ -3,7 +3,7 @@
 
     const actions = [
         {
-            label: "Add Node",
+            label: "➕ Add Device",
             action: () => deviceStore.createDevice()
         }
     ]

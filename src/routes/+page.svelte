@@ -9,3 +9,8 @@
 </script>
 
 <Board/>
+
+<style lang="sass">
+    :global(body)
+        font-family: Sans-Serif
+</style>
