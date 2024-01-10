@@ -57,6 +57,25 @@ function createDeviceStore() {
 		await response.json();
     }
 
+    async function deleteDevice(deviceId: string) {
+        const device = get(deviceStore).find(d => `${d.id}` === deviceId)
+
+        if (!device) {
+            throw new Error(`Cannot delete device because id does not exist. [id=${deviceId}]`)
+        }
+
+        const response = await fetch('/api/devices', {
+			method: 'DELETE',
+			body: JSON.stringify(device)
+		});
+	
+		const result = await response.json();
+
+        if (result) {
+            nodeStore.update(existing => existing.filter(x => x.id !== deviceId))
+        }
+    }
+
     function mapDeviceToNode(device: Device): Node {
         return {
             id: `${device.id}`, // required and needs to be a string
@@ -86,6 +105,7 @@ function createDeviceStore() {
         setInitialDevices,
         createDevice,
         updateDevice,
+        deleteDevice
     }
 }
 

@@ -12,19 +12,23 @@
     let { label } = data;
     let isEditing = false;
 
-    function handleDoubleClick(event: MouseEvent) {
+    function handleDoubleClick() {
         isEditing = true;
     }
 
-    function handleClickOutside(event: CustomEvent) {
+    async function handleClickOutside() {
         if (isEditing) {
-            deviceStore.updateDevice(id, device => ({
+            await deviceStore.updateDevice(id, device => ({
                 ...device,
                 title: label,
             }))
         }
 
         isEditing = false;
+    }
+
+    async function handleDeleteClick() {
+        await deviceStore.deleteDevice(id)
     }
 </script>
   
@@ -38,6 +42,13 @@
     title="Device Name"
     bind:value={label}
 />
+<button
+    class="delete-button"
+    type="button"
+    title="Delete Device"
+    on:click={handleDeleteClick}>
+    ❌
+</button>
 <Handle
     type="source"
     position={Position.Right}
@@ -49,12 +60,12 @@
 <style lang="sass">
     :global(.svelte-flow__node-deviceNode)
         cursor: pointer
-        background: radial-gradient(ellipse at top, #dadde1, transparent), rgba(220, 220, 220, .5)
+        background: radial-gradient(ellipse at top, #dadde1, transparent), #f0f0f0
         padding: 1rem 2rem
         border-radius: 8px
 
     :global(.svelte-flow__node-deviceNode.selected)
-        background: radial-gradient(ellipse at top, #fbc2eb, transparent), rgba(220, 220, 220, .5)
+        background: radial-gradient(ellipse at top, #fbc2eb, transparent), #f0f0f0
 
     :global(.svelte-flow__handle)
         background: white
@@ -75,4 +86,20 @@
             border-color: #3c5c87
             background: rgba(255, 255, 255, .75)
             
+    .delete-button
+        all: unset
+        position: absolute
+        translate: -50%
+        left: 50%
+        bottom: -12px
+        background: white
+        border-radius: 1000px
+        padding: 4px
+        font-size: 12px
+        cursor: pointer
+        display: none
+
+    :global(.svelte-flow__node-deviceNode.selected .delete-button)
+        display: block
+
 </style>

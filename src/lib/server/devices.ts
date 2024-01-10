@@ -31,3 +31,13 @@ export const updateDevice = async (f: typeof fetch, device: Device) => {
     });
     return await res.json() as Device;
 }
+
+export const deleteDevice = async (f: typeof fetch, deviceId: number) => {
+    const res = await f(`${env.API_BASE_URL}/devices/${deviceId}`, {
+        method: "DELETE",
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+    return res.status.toString().startsWith("2");
+}
