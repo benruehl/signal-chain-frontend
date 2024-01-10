@@ -54,7 +54,7 @@
         border-radius: 8px
 
     :global(.svelte-flow__node-deviceNode.selected)
-        background: radial-gradient(ellipse at top, #c8d8ed, transparent), rgba(220, 220, 220, .5)
+        background: radial-gradient(ellipse at top, #fbc2eb, transparent), rgba(220, 220, 220, .5)
 
     :global(.svelte-flow__handle)
         background: white

@@ -30,11 +30,13 @@
 .action
     all: unset
     cursor: pointer
-    background: rgba(220, 220, 220, .5)
+    color: #52497A
+    background-image: linear-gradient(to bottom right, #fbc2eb, #a6c1ee)
     backdrop-filter: blur(10px)
-    padding: 1rem
-    border-radius: 8px
+    padding: 1rem 2rem
+    border-radius: 1000px
+    transition: scale .2s ease
 
     &:hover
-        background: rgba(220, 220, 220, .75)
+        scale: 1.1
 </style>
