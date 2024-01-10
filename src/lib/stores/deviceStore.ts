@@ -32,7 +32,11 @@ function createDeviceStore() {
             const updatedDevice = await response.json() as Device;
         
             if (updatedDevice.id) {
-                newNode.id = updatedDevice.id.toString();
+                const deviceId = updatedDevice.id
+                nodeStore.update(nodes => nodes.map(node => node.id ? node : {
+                    ...node,
+                    id: deviceId.toString()
+                }))
             }
         } else {
             // remove new node if response was not successful
@@ -79,7 +83,7 @@ function createDeviceStore() {
 
     function mapDeviceToNode(device: Device): Node {
         return {
-            id: `${device.id}`, // required and needs to be a string
+            id: device.id ? `${device.id}` : "", // required and needs to be a string
             type: "deviceNode", // matches defined type of custom node component
             position: {
                 x: device.positionX, // required
