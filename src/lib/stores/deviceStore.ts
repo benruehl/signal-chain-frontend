@@ -39,18 +39,15 @@ function createDeviceStore() {
         }
     }
 
-    async function updateDevicePosition(deviceId: string, positionX: number, positionY: number) {
+    async function updateDevice(deviceId: string, update: (device: Device) => Device) {
         const device = get(deviceStore).find(d => `${d.id}` === deviceId)
 
         if (!device) {
             throw new Error(`Cannot update device because id does not exist. [id=${deviceId}]`)
         }
 
-        const updatedDevice = {
-            ...device,
-            positionX: positionX,
-            positionY: positionY
-        }
+        const updatedDevice = update(device);
+
         const response = await fetch('/api/devices', {
 			method: 'PUT',
 			body: JSON.stringify(updatedDevice)
@@ -63,6 +60,7 @@ function createDeviceStore() {
     function mapDeviceToNode(device: Device): Node {
         return {
             id: `${device.id}`, // required and needs to be a string
+            type: "deviceNode", // matches defined type of custom node component
             position: {
                 x: device.positionX, // required
                 y: device.positionY // required
@@ -87,7 +85,7 @@ function createDeviceStore() {
         nodeStore: nodeStore,
         setInitialDevices,
         createDevice,
-        updateDevicePosition,
+        updateDevice,
     }
 }
 
