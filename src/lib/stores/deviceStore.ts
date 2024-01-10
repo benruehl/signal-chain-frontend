@@ -30,6 +30,7 @@ function createDeviceStore() {
         if (response.ok) {
             // update new node id if response was successful
             const updatedDevice = await response.json() as Device;
+        
             if (updatedDevice.id) {
                 newNode.id = updatedDevice.id.toString();
             }

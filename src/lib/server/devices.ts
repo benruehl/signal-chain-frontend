@@ -39,5 +39,5 @@ export const deleteDevice = async (f: typeof fetch, deviceId: number) => {
             'Content-Type': 'application/json'
         }
     });
-    return res.status.toString().startsWith("2");
+    return res.ok;
 }

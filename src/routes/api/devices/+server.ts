@@ -4,14 +4,14 @@ import type { RequestHandler } from "@sveltejs/kit"
 
 export const POST: RequestHandler = async ({ request }) => {
     const device = await request.json() as Device;
-    await createDevice(fetch, device);
-    return new Response(JSON.stringify({ success: true }));
+    const createdDevice = await createDevice(fetch, device);
+    return new Response(JSON.stringify(createdDevice));
 }
 
 export const PUT: RequestHandler = async ({ request }) => {
     const device = await request.json() as Device;
-    await updateDevice(fetch, device);
-    return new Response(JSON.stringify({ success: true }));
+    const updatedDevice = await updateDevice(fetch, device);
+    return new Response(JSON.stringify(updatedDevice));
 }
 
 export const DELETE: RequestHandler = async ({ request }) => {
