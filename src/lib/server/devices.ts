@@ -10,7 +10,11 @@ export const fetchDevices = async (f: typeof fetch) => {
 export const createDevice = async (f: typeof fetch, device: Device) => {
     const res = await f(`${env.API_BASE_URL}/devices`, {
         method: "POST",
-        body: JSON.stringify(device),
+        body: JSON.stringify({
+            title: device.title,
+            positionX: device.positionX,
+            positionY: device.positionY,
+        }),
         headers: {
             'Content-Type': 'application/json'
         }
@@ -22,8 +26,9 @@ export const updateDevice = async (f: typeof fetch, device: Device) => {
     const res = await f(`${env.API_BASE_URL}/devices/${device.id}`, {
         method: "PUT",
         body: JSON.stringify({
-            ...device,
-            id: undefined
+            title: device.title,
+            positionX: device.positionX,
+            positionY: device.positionY,
         }),
         headers: {
             'Content-Type': 'application/json'

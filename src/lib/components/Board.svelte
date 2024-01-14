@@ -1,5 +1,4 @@
 <script lang="ts">
-    import { writable } from 'svelte/store';
     import { SvelteFlow, Background, Controls } from '@xyflow/svelte';
     import '@xyflow/svelte/dist/style.css';
     import Toolbar from './Toolbar.svelte';
@@ -7,11 +6,15 @@
     import { deviceStore } from '$lib/stores';
 
     const nodes = deviceStore.nodeStore;
+    const edges = deviceStore.edgeStore;
+
+    $: {
+        console.log($edges)
+    }
+
     const nodeTypes = {
         deviceNode: DeviceNode
     };
-
-    const edges = writable([]);
 
     function handleNodeDrag(event: CustomEvent) {
         const { id, position } = event.detail.node
